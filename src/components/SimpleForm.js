@@ -1,43 +1,46 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-const FormularioA = ({ handleSubmit, handleBlur, errors, touched }) => {
-  const [formData, setFormData] = useState({ nome: '', email: '' });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
-  };
-
+const Form1 = ({ values, errors, handleChange, handleSubmit }) => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label>Nome:</label>
-        <input
-          type="text"
-          name="nome"
-          value={formData.nome}
-          onChange={handleChange}
-          onBlur={handleBlur}
-        />
-        {touched.nome && errors.nome && <span>{errors.nome}</span>}
+        <label>
+          Input:
+          <input type="text" name="inputField" value={values.inputField || ''} onChange={handleChange} />
+        </label>
+        {errors.inputField && <span>{errors.inputField}</span>}
       </div>
       <div>
-        <label>Email:</label>
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          onBlur={handleBlur}
-        />
-        {touched.email && errors.email && <span>{errors.email}</span>}
+        <label>
+          Checkbox:
+          <input type="checkbox" name="checkboxField" checked={values.checkboxField || false} onChange={handleChange} />
+        </label>
+        {errors.checkboxField && <span>{errors.checkboxField}</span>}
       </div>
-      <button type="submit">Enviar</button>
+      <div>
+        <label>
+          Select:
+          <select name="selectField" value={values.selectField || ''} onChange={handleChange}>
+            <option value="">Select an option</option>
+            <option value="option1">Option 1</option>
+            <option value="option2">Option 2</option>
+          </select>
+        </label>
+        {errors.selectField && <span>{errors.selectField}</span>}
+      </div>
+      <div>
+        <label>
+          Radio:
+          <input type="radio" name="radioField" value="option1" checked={values.radioField === 'option1'} onChange={handleChange} />
+          Option 1
+          <input type="radio" name="radioField" value="option2" checked={values.radioField === 'option2'} onChange={handleChange} />
+          Option 2
+        </label>
+        {errors.radioField && <span>{errors.radioField}</span>}
+      </div>
+      <button type="submit">Submit</button>
     </form>
   );
 };
 
-export default FormularioA;
+export default Form1;

@@ -1,62 +1,48 @@
 import React, { useState } from 'react';
 
-const withValidation = (WrappedComponent, validationRules) => {
-  return (props) => {
+const withValidation = (WrappedComponent) => {
+  return ({ onSubmit, validations, ...props }) => {
+    const [values, setValues] = useState({});
     const [errors, setErrors] = useState({});
-    const [touched, setTouched] = useState({});
 
-    const validate = (name, value) => {
-      let error = '';
-      if (validationRules[name]) {
-        if (validationRules[name].required && !value) {
-          error = `${name} é obrigatório.`;
-        } else if (validationRules[name].pattern && !validationRules[name].pattern.test(value)) {
-          error = `${name} é inválido.`;
-        }
-      }
-      return error;
-    };
-
-    const handleBlur = (e) => {
-      const { name, value } = e.target;
-      const error = validate(name, value);
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        [name]: error
-      }));
-      setTouched((prevTouched) => ({
-        ...prevTouched,
-        [name]: true
-      }));
+    const handleChange = (e) => {
+      const { name, value, type, checked } = e.target;
+      setValues({
+        ...values,
+        [name]: type === 'checkbox' ? checked : value,
+      });
     };
 
     const handleSubmit = (e) => {
       e.preventDefault();
-      const formElements = e.target.elements;
-      let newErrors = {};
-      let isValid = true;
-
-      for (let element of formElements) {
-        if (element.name) {
-          const error = validate(element.name, element.value);
-          if (error) isValid = false;
-          newErrors[element.name] = error;
-        }
-      }
-
+      const newErrors = validate(values);
       setErrors(newErrors);
 
+      const isValid = Object.values(newErrors).every(error => error === null);
+
       if (isValid) {
-        props.onSubmit(e);
+        onSubmit(values);
+        setValues({});
       }
+    };
+
+    const validate = (values) => {
+      const errors = {};
+      for (const key in validations) {
+        if (validations.hasOwnProperty(key)) {
+          const error = validations[key](values[key]);
+          errors[key] = error;
+        }
+      }
+      return errors;
     };
 
     return (
       <WrappedComponent
         {...props}
+        values={values}
         errors={errors}
-        touched={touched}
-        handleBlur={handleBlur}
+        handleChange={handleChange}
         handleSubmit={handleSubmit}
       />
     );

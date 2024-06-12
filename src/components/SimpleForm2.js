@@ -1,43 +1,32 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-const FormularioB = ({ handleSubmit, handleBlur, errors, touched }) => {
-  const [formData, setFormData] = useState({ username: '', password: '' });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
-  };
-
+const Form2 = ({ values, errors, handleChange, handleSubmit }) => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label>Username:</label>
-        <input
-          type="text"
-          name="username"
-          value={formData.username}
-          onChange={handleChange}
-          onBlur={handleBlur}
-        />
-        {touched.username && errors.username && <span>{errors.username}</span>}
+        <label>
+          Email:
+          <input type="email" name="email" value={values.email || ''} onChange={handleChange} />
+        </label>
+        {errors.email && <span>{errors.email}</span>}
       </div>
       <div>
-        <label>Password:</label>
-        <input
-          type="password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-          onBlur={handleBlur}
-        />
-        {touched.password && errors.password && <span>{errors.password}</span>}
+        <label>
+          Name:
+          <input type="text" name="name" value={values.name || ''} onChange={handleChange} />
+        </label>
+        {errors.name && <span>{errors.name}</span>}
       </div>
-      <button type="submit">Login</button>
+      <div>
+        <label>
+          Password:
+          <input type="password" name="password" value={values.password || ''} onChange={handleChange} />
+        </label>
+        {errors.password && <span>{errors.password}</span>}
+      </div>
+      <button type="submit">Submit</button>
     </form>
   );
 };
 
-export default FormularioB;
+export default Form2;
