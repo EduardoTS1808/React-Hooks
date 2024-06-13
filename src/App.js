@@ -4,15 +4,20 @@ import withValidation from './components/withFormHandling1';
 import Form1 from './components/SimpleForm';
 import Form2 from './components/SimpleForm2';
 import DataTable from './components/DataTable';
+import Spinner from './components/Spinner/Spinner'
 
 const ValidatedForm1 = withValidation(Form1);
 const ValidatedForm2 = withValidation(Form2);
-
 const App = () => {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const handleForm1Submit = (formData) => {
-    setData(prevData => [...prevData, formData]);
+    setLoading(true);
+    setTimeout(() => {
+      setData(prevData => [...prevData, formData]);
+      setLoading(false);
+    }, 2000);
   };
 
   const handleForm2Submit = (formData) => {
@@ -38,7 +43,8 @@ const App = () => {
 
   return (
     <div>
-      <h2>Formulário para novos candidatos</h2>
+      {loading ? <Spinner/> : <div>
+        <h2>Formulário para novos candidatos</h2>
       <ValidatedForm1 onSubmit={handleForm1Submit} validations={form1Validations} />
 
       <h2>Login para usuários.</h2>
@@ -46,7 +52,13 @@ const App = () => {
 
       <h2>Lista de Candidatos</h2>
       <DataTable data={data} onDelete={handleDelete} />
+        </div>}
+        {/* { loading  &&  <Spinner/>  } */}
+    
     </div>
+
+
+  
   );
 };
 
