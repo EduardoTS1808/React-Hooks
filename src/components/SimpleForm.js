@@ -1,44 +1,44 @@
 import React from 'react';
+import './form1.css'
 
 const Form1 = ({ values, errors, handleChange, handleSubmit }) => {
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>
-          Input:
-          <input type="text" name="inputField" value={values.inputField || ''} onChange={handleChange} />
+    <form  className="formulario" onSubmit={handleSubmit}>
+      <div  className='campo-input'>
+        <label  className="cr-wrapper" >
+          Nome:
+          <input className='input'  placeholder='Digite seu nome' type="text" name="inputField" value={values.inputField || ''} onChange={handleChange} />
         </label>
         {errors.inputField && <span>{errors.inputField}</span>}
       </div>
-      <div>
-        <label>
-          Checkbox:
-          <input type="checkbox" name="checkboxField" checked={values.checkboxField || false} onChange={handleChange} />
+      <div className='campo-input'>
+        <label  class="cr-wrapper"> 
+         Brazileiro: <input type="checkbox" name="checkboxField" checked={values.checkboxField || false} onChange={handleChange} />
         </label>
         {errors.checkboxField && <span>{errors.checkboxField}</span>}
       </div>
-      <div>
+      <div  className='campo-input'>
         <label>
-          Select:
+        Selecione sua escolaridade:
           <select name="selectField" value={values.selectField || ''} onChange={handleChange}>
-            <option value="">Select an option</option>
-            <option value="option1">Option 1</option>
-            <option value="option2">Option 2</option>
+            <option value=""></option>
+            <option value="Médio Completo">Médio Completo</option>
+            <option value="Superior">Superior</option>
           </select>
         </label>
         {errors.selectField && <span>{errors.selectField}</span>}
       </div>
-      <div>
-        <label>
-          Radio:
-          <input type="radio" name="radioField" value="option1" checked={values.radioField === 'option1'} onChange={handleChange} />
-          Option 1
-          <input type="radio" name="radioField" value="option2" checked={values.radioField === 'option2'} onChange={handleChange} />
-          Option 2
+      <div  className='campo-input'>
+        <label className='cr-wrapper'>
+        Horário para trabalho:
+          <input type="radio" name="radioField" value="diurno" checked={values.radioField === 'diurno'} onChange={handleChange} />
+            Diurno
+          <input type="radio" name="radioField" value="noturno" checked={values.radioField === 'noturno'} onChange={handleChange} />
+          Noturno
         </label>
         {errors.radioField && <span>{errors.radioField}</span>}
       </div>
-      <button type="submit">Submit</button>
+      <button  className='testbutton'  type="submit">Submit</button>
     </form>
   );
 };

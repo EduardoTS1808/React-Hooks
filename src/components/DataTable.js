@@ -1,18 +1,23 @@
-// src/components/DataTable.js
+
 import React from 'react';
 
 const DataTable = ({ data, onDelete }) => {
-  if (data.length === 0) return <p>No data available</p>;
+  if (data.length === 0) return <p>Lista Vazia!</p>;
 
   const headers = Object.keys(data[0]);
 
   return (
     <table>
       <thead>
+       
         <tr>
-          {headers.map(header => (
-            <th key={header}>{header}</th>
-          ))}
+        <th>Nome</th>
+        <th></th>
+        <th>Escolaridade</th>
+        <th>Horário trabalho</th>
+        <th>deletar</th>
+   
+     
         </tr>
       </thead>
       <tbody>

@@ -1,4 +1,4 @@
-// src/App.js
+
 import React, { useState } from 'react';
 import withValidation from './components/withFormHandling1';
 import Form1 from './components/SimpleForm';
@@ -24,27 +24,27 @@ const App = () => {
   };
 
   const form1Validations = {
-    inputField: (value) => value ? null : 'Input is required',
-    checkboxField: (value) => value ? null : 'Checkbox must be checked',
-    selectField: (value) => value ? null : 'Select an option',
-    radioField: (value) => value ? null : 'Select a radio option',
+    inputField: (value) => value ? null : 'Campo nome Vazio!',
+    checkboxField: (value) => value ? null : 'Selecione sua naturalidade',
+    selectField: (value) => value ? null : 'Selecione sua Escolaridade',
+    radioField: (value) => value ? null : 'Marqui o melhor horário',
   };
 
   const form2Validations = {
-    email: (value) => /\S+@\S+\.\S+/.test(value) ? null : 'Email is invalid',
-    name: (value) => value ? null : 'Name is required',
-    password: (value) => value.length >= 6 ? null : 'Password must be at least 6 characters',
+    email: (value) => /\S+@\S+\.\S+/.test(value) ? null : 'Email está Inválido',
+    name: (value) => value ? null : 'Campo nome vazio!',
+    password: (value) => value.length >= 6 ? null : 'Por favor digite uma senha, pelo menos 6 caractéres.',
   };
 
   return (
     <div>
-      <h1>Form 1</h1>
+      <h2>Formulário para novos candidatos</h2>
       <ValidatedForm1 onSubmit={handleForm1Submit} validations={form1Validations} />
 
-      <h1>Form 2</h1>
+      <h2>Login para usuários.</h2>
       <ValidatedForm2 onSubmit={handleForm2Submit} validations={form2Validations} />
 
-      <h1>Data Table</h1>
+      <h2>Lista de Candidatos</h2>
       <DataTable data={data} onDelete={handleDelete} />
     </div>
   );
